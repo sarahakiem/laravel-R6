@@ -110,7 +110,7 @@ Route::get('cv',[ExampleController::class,'cv']);
 Route::get('link',[ExampleController::class, 'link']);
 
 Route::get('welcome', function () {
-    return "welcome to laravel";
+    return "welcome  laravel";
 })->name('v');
 Route::get('hell', function () {
     return "welcome to hell";
