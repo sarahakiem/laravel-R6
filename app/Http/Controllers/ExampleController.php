@@ -9,6 +9,12 @@ class ExampleController extends Controller
     function login(){
         return view('login');
     }
+    function link(){
+        $url1 = route('v');
+    $url2 = route('c');
+    return "<a href='$url1'>go to welcome</a>
+            <a href='$url2'>go to hell</a>";
+    }
     function cv(){
         return view('cv');
     }

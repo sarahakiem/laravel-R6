@@ -101,12 +101,14 @@ Route::prefix('car')->group(function () {
 ///////////////////////////////   USING Controller      ///////////////////////
 Route::get('cv',[ExampleController::class,'cv']);
 //////////////////////          Named Route     //////////////////////////////////
-Route::get('link', function () {
-    $url1 = route('v');
-    $url2 = route('c');
-    return "<a href='$url1'>go to welcome</a>
-            <a href='$url2'>go to hell</a>";
-});
+// Route::get('link', function () {
+//     $url1 = route('v');
+//     $url2 = route('c');
+//     return "<a href='$url1'>go to welcome</a>
+//             <a href='$url2'>go to hell</a>";
+// });
+Route::get('link',[ExampleController::class, 'link']);
+
 Route::get('welcome', function () {
     return "welcome to laravel";
 })->name('v');
