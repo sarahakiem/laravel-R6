@@ -113,7 +113,7 @@ Route::get('welcome', function () {
     return "welcome  laravel";
 })->name('v');
 Route::get('hell', function () {
-    return "welcome to hell";
+    return "welcome to larvel2";
 })->name('c');
 //////////////////////////////   LOGIN FORM  ////////////////////////////////////////////////
 Route::get('login',[ExampleController::class, 'login']

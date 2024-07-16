@@ -13,7 +13,7 @@ class ExampleController extends Controller
         $url1 = route('v');
     $url2 = route('c');
     return "<a href='$url1'>go to welcome</a>
-            <a href='$url2'>go to hell</a>";
+            <a href='$url2'>go to laravel22</a>";
     }
     function cv(){
         return view('cv');
