@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClacssController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -118,9 +120,13 @@ Route::get('hell', function () {
 //////////////////////////////   LOGIN FORM  ////////////////////////////////////////////////
 Route::get('login',[ExampleController::class, 'login']
 );
-Route::post('data',function(){
-    return "data saVED SUSSESFULY";
-    })->name('data');
+Route::post('data',[ExampleController::class, 'data'])->name('data');
  //////////////////////// Contact US  ///////////////////////////////////////////////////////////
 Route::get('contact',[ExampleController::class, 'contact']);
 Route::post('recieved',[ExampleController::class,'recieved'])->name('recieved');
+//////////////////////////  add_car route   //////////////////////////////////////////////////////
+Route::get('createcar',[CarController::class,'create']);
+Route::post('car.store',[CarController::class,'store'])->name('cars.store');
+//////////////////////////  add_class       ///////////////////////////////////////////////////
+Route::get('add_class',[ClacssController::class,'create']);
+Route::post('save',[ClacssController::class,'store'])->name('save');
