@@ -9,6 +9,9 @@ class ExampleController extends Controller
     function login(){
         return view('login');
     }
+    function data(request $request){
+        return $request['email'] .'<br>'. $request['pwd'];
+    }
     function link(){
         $url1 = route('v');
     $url2 = route('c');
@@ -22,7 +25,8 @@ class ExampleController extends Controller
         return view('contact');
     }
     function recieved(Request $request){
-        $name = $request->input('name');
+        //dd($request->all());
+        $name = $request['name'];
         $email = $request->input('email');
         $subject = $request->input('subject');
         $message = $request->input('message');
