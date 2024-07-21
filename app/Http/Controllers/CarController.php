@@ -12,7 +12,11 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        //get all cars from data
+        //return view all cars data
+        //select*from cara->Car::get();
+        $cars =Car::get();
+        return view ('cars',compact('cars'));
     }
 
     /**
@@ -29,18 +33,20 @@ class CarController extends Controller
     public function store(Request $request)
     {
         //dd($request);
-        $carTable= "mercides";
-        $description= "dsgh";
-        $price=666;
-        $published=true;
+        // $carTable= "mercides";
+        // $description= "dsgh";
+        // $price=666;
+        // $published=true;
+        $data =[
+            'carTable' => $request->carTable ,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'published'=>isset($request->published)
+        ];
 
-        Car::create([
-            'carTable' => $carTable,
-            'description'=>$description,
-            'price'=>$price,
-            'published'=>$published
-        ]);
-        return "data stored sussfully";
+        Car::create($data);
+        return "fgh";
+        //return view('cars');
     }
 
     /**
@@ -56,7 +62,11 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //return"the car id is ".$id;
+        ////select *from cars
+        $car=Car::findOrfail($id);
+        ////compact////send data to a view
+        return view('edit_car',compact('car'));
     }
 
     /**

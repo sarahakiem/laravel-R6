@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADD new </title>
+    <title>Edit new </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,38 +63,38 @@
 </head>
 <body>
     <div>
-        <h1>ADD NEW Class </h1>
+        <h1>Edit Class </h1>
         <form action="{{ route('save') }}" method="POST">
             @csrf
             <!-- Class Name -->
             <label for="className">Class Name:</label>
-            <input type="text" id="className" name="className" maxlength="100" required>
+            <input type="text" id="className" name="className" maxlength="100" required value="{{$classes->className}}">
 
             <!-- Capacity -->
             <label for="capacity">Capacity:</label>
-            <input type="number" id="capacity" name="capacity" required>
+            <input type="number" id="capacity" name="capacity" required value="{{$classes->capacity}}">
 
             <!-- Is Fulled -->
             <label for="is_fulled">Is Fulled:</label>
-            <input type="checkbox" id="is_fulled" name="is_fulled">
+            <input type="checkbox" id="is_fulled" name="is_fulled" @checked($classes->is_fulled)>
 
             <!-- Price -->
             <label for="price">Price:</label>
-            <input type="number" id="price" name="price" step="0.01" required>
+            <input type="number" id="price" name="price" step="0.01" required value="{{$classes->price}}">
 
             <!-- Time From -->
             <label for="time_from">Time From:</label>
-            <input type="time" id="time_from" name="time_from" required>
+            <input type="time" id="time_from" name="time_from" required value="{{$classes->time_from}}">
 
             <!-- Time To -->
             <label for="time_to">Time To:</label>
-            <input type="time" id="time_to" name="time_to" required>
+            <input type="time" id="time_to" name="time_to" required value="{{$classes->time_to}}">
 
             <!-- Published -->
             <label for="published">Published:</label>
-            <input type="checkbox" id="published" name="published">
+            <input type="checkbox" id="published" name="published" @checked($classes->published)>
 
-            <button type="submit" >Submit</button>
+            <button type="submit">Edit</button>
         </form>
     </div>
 </body>

@@ -13,7 +13,7 @@ Route::get('w', function () {
     return "hellow laravel";
 });
 
-Route::get('cars/{id}', function ($id) {
+Route::get('cad/{id}', function ($id) {
     return "car is " . $id;
 }
 
@@ -121,12 +121,18 @@ Route::get('hell', function () {
 Route::get('login',[ExampleController::class, 'login']
 );
 Route::post('data',[ExampleController::class, 'data'])->name('data');
- //////////////////////// Contact US  ///////////////////////////////////////////////////////////
+ //////////////////////// Contact US          ////////////////////////////////////////////////////////
 Route::get('contact',[ExampleController::class, 'contact']);
 Route::post('recieved',[ExampleController::class,'recieved'])->name('recieved');
 //////////////////////////  add_car route   //////////////////////////////////////////////////////
 Route::get('createcar',[CarController::class,'create']);
 Route::post('car.store',[CarController::class,'store'])->name('cars.store');
+////////////////////////       cars        //////////////////////////////////////////////////
+Route::get('cars',[CarController::class,'index'])->name('cars.index');
+Route::get('cars/edit/{id}',[CarController::class,'edit'])->name('cars.edit');
 //////////////////////////  add_class       ///////////////////////////////////////////////////
 Route::get('add_class',[ClacssController::class,'create']);
 Route::post('save',[ClacssController::class,'store'])->name('save');
+/////////////////////////    classes      /////////////////////////////////////////////////
+Route::get('classes',[ClacssController::class,'index'])->name('clas');
+Route::get('class/edit/{id}',[ClacssController::class,'edit'])->name('class.edit');

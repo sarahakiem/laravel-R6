@@ -12,7 +12,8 @@ class ClacssController extends Controller
      */
     public function index()
     {
-        //
+        $class=Clacss::get();
+        return view('classes',compact('class'));
     }
 
     /**
@@ -56,7 +57,7 @@ class ClacssController extends Controller
             'time_to' => $request['time_to'],
             'published' => $request->boolean('published')
         ]);
-        return "data saved sussesfully";
+        //return "data saved sussesfully";
     }
 
     /**
@@ -64,7 +65,7 @@ class ClacssController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -72,7 +73,8 @@ class ClacssController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $classes=Clacss::findOrfail($id);
+        return view('edit_class',compact('classes'));
     }
 
     /**
