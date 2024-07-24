@@ -31,21 +31,22 @@
               <th scope="col">Price</th>
               <th scope="col">Description</th>
               <th scope="col">Published</th>
+              <th scope="col">EDIT</th>
+
             </tr>
           </thead>
           <tbody>
+            @foreach($cars as $car)
             <tr>
-              <td scope="row">BMW</td>
-              <td>120000</td>
-              <td>test test test ...</td>
-              <td>YES</td>
+              <td scope="row">{{$car['carTable']}}</td>
+              <td>{{$car['price']}}</td>
+              <td>{{Str::limit($car['description'],3,",,")}}</td>
+
+              <!-- <td>{{strlen($car['description'])>4?substr($car['description'],0,4)."..." : $car['description'];}}</td> -->
+              <td>{{$car['published']==1?"yes":"No"}}</td>
+              <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
             </tr>
-            <tr>
-              <td scope="row">BMW</td>
-              <td>120000</td>
-              <td>test test test ...</td>
-              <td>YES</td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
