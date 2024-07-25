@@ -53,6 +53,8 @@
                 <th>Time To</th>
                 <th>Published</th>
                 <th>Edit</th>
+                <th>Show</th>
+                <th>Delete</th>
 
             </tr>
             @foreach ($class as $clas)
@@ -66,10 +68,21 @@
                 <td>{{$clas['time_to'] }}</td>
                 <td>{{$clas['published']=="1"? 'Yes' : 'No' }}</td>
                 <td><a href="{{route('class.edit',$clas['id'])}}">Edit</a></td>
+                <td><a href="{{route('classes.show',$clas['id'])}}">Show</a></td>
+                <td><form action="{{route('class.delete',$clas['id'])}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="id" value="{{ $clas['id'] }}">
+                    <input type="submit" onclick="confirm('Are sure you want to delete this class')" value="delete">
+
+                </form></td>
             </tr>
             @endforeach
 
         </table>
     </div>
+    
+    <button ><a href="{{route('classes.trashed')}}" class="my-button">Show Deleted List</a></button >
+    
 </body>
 </html>

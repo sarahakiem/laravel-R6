@@ -129,10 +129,22 @@ Route::get('createcar',[CarController::class,'create']);
 Route::post('car.store',[CarController::class,'store'])->name('cars.store');
 ////////////////////////       cars        //////////////////////////////////////////////////
 Route::get('cars',[CarController::class,'index'])->name('cars.index');
-Route::get('cars/edit/{id}',[CarController::class,'edit'])->name('cars.edit');
+Route::get('cars/{id}/edit',[CarController::class,'edit'])->name('cars.edit');
+Route::put('cars/{id}',[CarController::class,'update'])->name('cars.update');
+
+Route::get('cars/show/{id}',[CarController::class,'show'])->name('cars.show');
+Route::get('cars/delete/{id}',[CarController::class,'destroy'])->name('cars.destroy');
+Route::get('cars/trashed',[CarController::class,'ShowDeleted'])->name('trashed.cars');
 //////////////////////////  add_class       ///////////////////////////////////////////////////
 Route::get('add_class',[ClacssController::class,'create']);
 Route::post('save',[ClacssController::class,'store'])->name('save');
 /////////////////////////    classes      /////////////////////////////////////////////////
 Route::get('classes',[ClacssController::class,'index'])->name('clas');
+///////////////////////       Edit         //////////////////////////////////////////////
 Route::get('class/edit/{id}',[ClacssController::class,'edit'])->name('class.edit');
+Route::put('classes/{id}',[ClacssController::class,'update'])->name('classes.update');
+///////////////////////       show         //////////////////////////////////////////////
+Route::get('classes/show/{id}',[ClacssController::class,'show'])->name('classes.show');
+///////////////////////       delete         //////////////////////////////////////////////
+Route::delete('class/delete/{id}',[ClacssController::class,'destroy'])->name('class.delete');
+Route::get('classes/trashed',[ClacssController::class,'showDeletedClasses'])->name('classes.trashed');

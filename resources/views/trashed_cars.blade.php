@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All Car</title>
+  <title>Trashed car</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
               <th scope="col">Published</th>
               <th scope="col">EDIT</th>
               <th scope="col">Show</th>
-              <th scope="col">Delete</th>
+              <th scope="col">Permenant Delete</th>
 
 
             </tr>
@@ -49,7 +49,7 @@
               <td>{{$car['published']==1?"yes":"No"}}</td>
               <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
               <td><a href="{{route('cars.show',$car['id'])}}">Show</a></td>
-              <td><a href="{{route('cars.destroy',$car['id'])}}" onclick="confirm('Are you sure you want to delete this item')">Delete</a></td>
+              <td><a href="#" >delete</a> </td>
             </tr>
             @endforeach
           </tbody>

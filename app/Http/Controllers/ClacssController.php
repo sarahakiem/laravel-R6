@@ -57,7 +57,7 @@ class ClacssController extends Controller
             'time_to' => $request['time_to'],
             'published' => $request->boolean('published')
         ]);
-        //return "data saved sussesfully";
+        return redirect()->route('clas');
     }
 
     /**
@@ -65,7 +65,8 @@ class ClacssController extends Controller
      */
     public function show(string $id)
     {
-        
+       $classes=Clacss::findOrFail($id) ;
+       return view('classes_details',compact('classes'));
     }
 
     /**
@@ -81,8 +82,19 @@ class ClacssController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
+    {     //dd($request,$id);
+        $data=[
+            'className' => $request['className'],
+            'capacity' => $request['capacity'],
+            'is_fulled' => $request->boolean('is_fulled'),
+            'price' => $request['price'],
+            'time_from' => $request['time_from'],
+            'time_to' => $request['time_to'],
+            'published' => $request->boolean('published')
+        ];
+        Clacss::where('id',$id)->update($data);
+        return redirect()->route('clas');
+
     }
 
     /**
@@ -90,6 +102,17 @@ class ClacssController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Clacss::where('id',$id)->delete();
+        return redirect()->route('clas');
+
+
+    }
+
+    //show deleted record 
+    public function showDeletedClasses(){
+        $class=Clacss::onlyTrashed()->get();
+        return view('trashed_classes',compact('class'));
+      
+
     }
 }

@@ -64,8 +64,9 @@
 <body>
     <div>
         <h1>Edit Class </h1>
-        <form action="{{ route('save') }}" method="POST">
+        <form action="{{ route('classes.update',$classes->id) }}" method="POST">
             @csrf
+            @method('put')
             <!-- Class Name -->
             <label for="className">Class Name:</label>
             <input type="text" id="className" name="className" maxlength="100" required value="{{$classes->className}}">
