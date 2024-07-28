@@ -66,6 +66,9 @@
         <h1>ADD NEW Class </h1>
         <form action="{{ route('save') }}" method="POST">
             @csrf
+            @error('name')
+            {{$message}}
+            @enderror
             <!-- Class Name -->
             <label for="className">Class Name:</label>
             <input type="text" id="className" name="className" maxlength="100" required>

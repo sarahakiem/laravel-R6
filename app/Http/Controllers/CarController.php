@@ -37,12 +37,14 @@ class CarController extends Controller
         // $description= "dsgh";
         // $price=666;
         // $published=true;
-        $data =[
-            'carTable' => $request->carTable ,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'published'=>isset($request->published)
-        ];
+        $data=$request->validate([
+            'carTable' => 'required|string',
+            'description'=>'required|string|max:100',
+            'price'=>'required|numeric',
+        ]);
+
+        $data['published']= isset($request->published);
+        
 
         Car::create($data);
         return redirect()->route('cars.index');
@@ -102,4 +104,17 @@ class CarController extends Controller
         $cars=Car::onlyTrashed()->get();
         return view('trashed_cars',compact('cars'));
     }
+    /////////////////restore deleted record //////////////////////////////
+    public function restore(string $id){
+        Car::where('id',$id)->restore();
+        return redirect()->route('cars.index');
+
+    }
+    ///////////////////Force delete ////////////////////////////////////
+    public function forceDelete(string $id)
+    {
+        car::where('id',$id)->forceDelete();
+        return redirect()->route('cars.index');
+    }
+
 }

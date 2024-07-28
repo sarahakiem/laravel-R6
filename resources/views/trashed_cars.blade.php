@@ -33,6 +33,7 @@
               <th scope="col">Published</th>
               <th scope="col">EDIT</th>
               <th scope="col">Show</th>
+              <th scope="col">Restore</th>
               <th scope="col">Permenant Delete</th>
 
 
@@ -49,7 +50,20 @@
               <td>{{$car['published']==1?"yes":"No"}}</td>
               <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
               <td><a href="{{route('cars.show',$car['id'])}}">Show</a></td>
-              <td><a href="#" >delete</a> </td>
+              <td>
+                <form action="{{route('cars.restore',$car['id'])}}" method="post">
+              
+                  @csrf
+                  @method('patch')
+                  <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
+                </form>
+              </td>
+              <td><form action="{{route('cars.permanentDelete',$car['id'])}}" method="post">
+              
+              @csrf
+              @method('delete')
+              <button type="submit" class="btn btn-link m-0 p-0">Delete</button>
+            </form> </td>
             </tr>
             @endforeach
           </tbody>

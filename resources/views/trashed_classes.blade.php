@@ -89,10 +89,13 @@
                         <td>{{ $clas->time_to }}</td>
                         <td>{{ $clas->published }}</td>
                         <td class="actions">
-                            
+                          <form action="{{route('classes.restore',$clas['id'])}}" method="POST">
+                            @csrf  
+                            @method('PATCH')
                         <button type="submit" class="btn btn-restore">Restore</button>
+                         </form>
                             
-                        <form action="" method="POST" style="display:inline;">
+                        <form action="{{route('class.permenantdelete',$clas['id'])}}'" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                         <button type="submit" class="btn btn-delete">Delete Permanently</button>
