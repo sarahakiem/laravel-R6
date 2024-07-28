@@ -20,6 +20,7 @@ return new class extends Migration
             $table->time('time_from');
             $table->time('time_to');
             $table->boolean('published');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
