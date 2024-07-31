@@ -59,32 +59,32 @@
         .button-container a {
             text-decoration: none;
             color: #fff;
-            background-color:#6f42c1 ;
+            background-color: #6f42c1;
             padding: 10px 20px;
             border-radius: 5px;
             font-size: 16px;
             transition: background-color 0.3s;
         }
         .button-container a:hover {
-            background-color: #007bff ;
+            background-color: #007bff;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>{{$car->carTable}} Details</h1>
+            <h1>{{ $car->carTable }} Details</h1>
         </div>
         <div class="car-image">
-            <img src="car-image.jpg" alt="Car Image">
+            <img src="{{asset('assets/images/'.$car->image) }}" alt="Car Image">
         </div>
         <div class="details">
-            <p><span class="label">Car Name:</span> <span class="value">{{$car->carTable}}</span></p>
-            <p><span class="label">Description:</span> <span class="value">{{$car->description}}</span></p>
-            <p><span class="label">Price:</span> <span class="value">${{$car->price}}</span></p>
+            <p><span class="label">Car Name:</span> <span class="value">{{ $car->carTable }}</span></p>
+            <p><span class="label">Description:</span> <span class="value">{{ $car->description }}</span></p>
+            <p><span class="label">Price:</span> <span class="value">${{ $car->price }}</span></p>
         </div>
         <div class="button-container">
-            <a href="{{Route('cars.index')}}">Return to All Cars</a>
+            <a href="{{ route('cars.index') }}">Return to All Cars</a>
         </div>
     </div>
 </body>

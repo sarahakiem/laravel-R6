@@ -151,7 +151,7 @@ Route::prefix('classes')->group(function () {
 /////////////////////////    classes      /////////////////////////////////////////////////
     Route::get('', [ClacssController::class, 'index'])->name('clas');
 ///////////////////////       Edit         //////////////////////////////////////////////
-    Route::get('class/edit/{id}', [ClacssController::class, 'edit'])->name('class.edit');
+    Route::get('edit/{id}', [ClacssController::class, 'edit'])->name('class.edit');
     Route::put('update/{id}', [ClacssController::class, 'update'])->name('classes.update');
 ///////////////////////       show         //////////////////////////////////////////////
     Route::get('show/{id}', [ClacssController::class, 'show'])->name('classes.show');
@@ -163,3 +163,6 @@ Route::prefix('classes')->group(function () {
     Route::delete('deletePermenant/{id}', [ClacssController::class, 'forceDelete'])->name('class.permenantdelete');
 
 });
+/////////////////////////////////////////////////////////////////////////////////
+Route::get('upload',[ExampleController::class,'fileUpload']);
+Route::post('upload',[ExampleController::class,'upload'])->name('file.upload');

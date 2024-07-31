@@ -41,13 +41,23 @@ class CarController extends Controller
             'carTable' => 'required|string',
             'description'=>'required|string|max:100',
             'price'=>'required|numeric',
+            'image'=>'required|image|mimes:png,jpg,jpeg,gif|max:2024'
         ]);
 
         $data['published']= isset($request->published);
+
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        $data['image']=$file_name;
         
 
         Car::create($data);
-        return redirect()->route('cars.index');
+        
+
+        
+        return 'Uploaded succesfuly';
     }
 
     /**
@@ -78,14 +88,23 @@ class CarController extends Controller
     public function update(Request $request, string $id)
     {
         //dd($request,$id);
-        $data =[
-            'carTable' => $request->carTable ,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'published'=>isset($request->published)
-        ];
+        $data=$request->validate([
+            'carTable' => 'required|string',
+            'description'=>'required|string|max:100',
+            'price'=>'required|numeric',
+            'image'=>'image|mimes:png,jpg,jpeg,gif|max:2024'
+        ]);
+
+        $data['published']= isset($request->published);
+
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        $data['image']=$file_name;
         car::where('id',$id)->update($data);
-         return redirect()->route('cars.index');
+        return 'Uploaded succesfuly';
+        //  return redirect()->route('cars.index');
 
     }
 
