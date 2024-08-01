@@ -60,7 +60,7 @@
           <div class="form-group mb-3 row">
             <label for="image" class="form-label col-md-2 fw-bold text-md-end" >Image:</label>
             <div class="mb-3">
-            <img src="{{ asset('assets/images/' . $car->image) }}" alt="Car Image" style="max-width: 200px; max-height: 200px;"/>
+            <img src="{{ asset('assets/images/' . $car->image) }}" alt="Car Image" style="max-width: 200px; max-height: 200px;" value="{{old('image',$car->image)}}"/>
             </div>
             <div class="col-md-10">
               <input type="file" class="form-control" id="image" name="image" />
