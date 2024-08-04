@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Clacss;
+use Illuminate\Http\Request;
 
 class ClacssController extends Controller
 {
@@ -12,8 +12,8 @@ class ClacssController extends Controller
      */
     public function index()
     {
-        $class=Clacss::get();
-        return view('classes',compact('class'));
+        $class = Clacss::get();
+        return view('classes', compact('class'));
     }
 
     /**
@@ -47,17 +47,29 @@ class ClacssController extends Controller
         // 'published'=>$published
         // ]
         // );
-
-        Clacss::create([
-            'className' => $request['className'],
-            'capacity' => $request['capacity'],
-            'is_fulled' => $request->boolean('is_fulled'),
-            'price' => $request['price'],
-            'time_from' => $request['time_from'],
-            'time_to' => $request['time_to'],
-            'published' => $request->boolean('published')
+        $data = $request->validate([
+            'className' => 'required|string',
+            'capacity' => 'required|numeric|max:30',
+            'price' => 'required|numeric|max:200',
+            'time_from' => 'required',
+            'time_to' => 'required',
         ]);
+        $data['published'] = isset($request->published);
+        $data['is_fulled'] = isset($request->is_fulled);
+        Clacss::create($data);
         return redirect()->route('clas');
+
+        // Clacss::create([
+        //     'className' => $request['className'],
+        //     'capacity' => $request['capacity'],
+        //     'is_fulled' => $request->boolean('is_fulled'),
+        //     'price' => $request['price'],
+        //     'time_from' => $request['time_from'],
+        //     'time_to' => $request['time_to'],
+
+        //     'published' => $request->boolean('published')
+        // ]);
+
     }
 
     /**
@@ -65,8 +77,8 @@ class ClacssController extends Controller
      */
     public function show(string $id)
     {
-       $classes=Clacss::findOrFail($id) ;
-       return view('classes_details',compact('classes'));
+        $classes = Clacss::findOrFail($id);
+        return view('classes_details', compact('classes'));
     }
 
     /**
@@ -74,25 +86,26 @@ class ClacssController extends Controller
      */
     public function edit(string $id)
     {
-        $classes=Clacss::findOrfail($id);
-        return view('edit_class',compact('classes'));
+        $classes = Clacss::findOrfail($id);
+        return view('edit_class', compact('classes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {     //dd($request,$id);
-        $data=[
-            'className' => $request['className'],
-            'capacity' => $request['capacity'],
-            'is_fulled' => $request->boolean('is_fulled'),
-            'price' => $request['price'],
-            'time_from' => $request['time_from'],
-            'time_to' => $request['time_to'],
-            'published' => $request->boolean('published')
-        ];
-        Clacss::where('id',$id)->update($data);
+    { //dd($request,$id);
+        $data = $request->validate([
+            'className' => 'required|string',
+            'capacity' => 'required|numeric|max:30',
+            'price' => 'required|numeric|max:200',
+            'time_from' => 'required',
+            'time_to' => 'required',
+        ]);
+        $data['published'] = isset($request->published);
+        $data['is_fulled'] = isset($request->is_fulled);
+
+        Clacss::where('id', $id)->update($data);
         return redirect()->route('clas');
 
     }
@@ -100,19 +113,32 @@ class ClacssController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        Clacss::where('id',$id)->delete();
+        Clacss::where('id', $id)->delete();
+
         return redirect()->route('clas');
 
-
     }
 
-    //show deleted record 
-    public function showDeletedClasses(){
-        $class=Clacss::onlyTrashed()->get();
-        return view('trashed_classes',compact('class'));
-      
+    //show deleted record
+    public function showDeletedClasses()
+    {
+        $class = Clacss::onlyTrashed()->get();
+        return view('trashed_classes', compact('class'));
 
     }
+    //////////Restore deleted/////////////////
+    public function restore(string $id)
+    {
+        Clacss::where('id', $id)->restore();
+        return redirect()->route('classes.trashed');
+    }
+    ///////////////////   permenant delete   ///////////////////
+    public function forceDelete(string $id)
+    {
+        Clacss::where('id', $id)->forceDelete();
+        return redirect()->route('classes.trashed');
+    }
+
 }

@@ -37,15 +37,27 @@ class CarController extends Controller
         // $description= "dsgh";
         // $price=666;
         // $published=true;
-        $data =[
-            'carTable' => $request->carTable ,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'published'=>isset($request->published)
-        ];
+        $data=$request->validate([
+            'carTable' => 'required|string',
+            'description'=>'required|string|max:100',
+            'price'=>'required|numeric',
+            'image'=>'required|image|mimes:png,jpg,jpeg,gif|max:2024'
+        ]);
+
+        $data['published']= isset($request->published);
+
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        $data['image']=$file_name;
+        
 
         Car::create($data);
-        return redirect()->route('cars.index');
+        
+
+        
+        return 'Uploaded succesfuly';
     }
 
     /**
@@ -76,14 +88,29 @@ class CarController extends Controller
     public function update(Request $request, string $id)
     {
         //dd($request,$id);
-        $data =[
-            'carTable' => $request->carTable ,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'published'=>isset($request->published)
-        ];
+        $data=$request->validate([
+            'carTable' => 'required|string',
+            'description'=>'required|string|max:100',
+            'price'=>'required|numeric',
+            'image'=>'nullable|image|mimes:png,jpg,jpeg,gif|max:2024'
+        ]);
+        $car=Car::findOrfail($id);
+        $car->carTable = $request->name;
+        $car->description = $request->content;
+        $car->price = $request->name;
+        $data['published']= isset($request->published);
+        if($request['image']=='true'){
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        $data['image']=$file_name;
+        }
+
+        
         car::where('id',$id)->update($data);
-         return redirect()->route('cars.index');
+        return 'Uploaded succesfuly';
+        //  return redirect()->route('cars.index');
 
     }
 
@@ -102,4 +129,17 @@ class CarController extends Controller
         $cars=Car::onlyTrashed()->get();
         return view('trashed_cars',compact('cars'));
     }
+    /////////////////restore deleted record //////////////////////////////
+    public function restore(string $id){
+        Car::where('id',$id)->restore();
+        return redirect()->route('cars.index');
+
+    }
+    ///////////////////Force delete ////////////////////////////////////
+    public function forceDelete(string $id)
+    {
+        car::where('id',$id)->forceDelete();
+        return redirect()->route('cars.index');
+    }
+
 }

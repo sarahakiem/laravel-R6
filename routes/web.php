@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClacssController;
+use App\Http\Controllers\ExampleController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -101,7 +101,7 @@ Route::prefix('car')->group(function () {
 // });
 ////    ANOTHER WAY   //////Route::view('cv', 'cv');
 ///////////////////////////////   USING Controller      ///////////////////////
-Route::get('cv',[ExampleController::class,'cv']);
+Route::get('cv', [ExampleController::class, 'cv']);
 //////////////////////          Named Route     //////////////////////////////////
 // Route::get('link', function () {
 //     $url1 = route('v');
@@ -109,7 +109,7 @@ Route::get('cv',[ExampleController::class,'cv']);
 //     return "<a href='$url1'>go to welcome</a>
 //             <a href='$url2'>go to hell</a>";
 // });
-Route::get('link',[ExampleController::class, 'link']);
+Route::get('link', [ExampleController::class, 'link']);
 
 Route::get('welcome', function () {
     return "welcome  laravel";
@@ -118,33 +118,51 @@ Route::get('hell', function () {
     return "welcome to larvel2";
 })->name('c');
 //////////////////////////////   LOGIN FORM  ////////////////////////////////////////////////
-Route::get('login',[ExampleController::class, 'login']
+Route::get('login', [ExampleController::class, 'login']
 );
-Route::post('data',[ExampleController::class, 'data'])->name('data');
- //////////////////////// Contact US          ////////////////////////////////////////////////////////
-Route::get('contact',[ExampleController::class, 'contact']);
-Route::post('recieved',[ExampleController::class,'recieved'])->name('recieved');
-//////////////////////////  add_car route   //////////////////////////////////////////////////////
-Route::get('createcar',[CarController::class,'create']);
-Route::post('car.store',[CarController::class,'store'])->name('cars.store');
-////////////////////////       cars        //////////////////////////////////////////////////
-Route::get('cars',[CarController::class,'index'])->name('cars.index');
-Route::get('cars/{id}/edit',[CarController::class,'edit'])->name('cars.edit');
-Route::put('cars/{id}',[CarController::class,'update'])->name('cars.update');
+Route::post('data', [ExampleController::class, 'data'])->name('data');
+//////////////////////// Contact US          ////////////////////////////////////////////////////////
+Route::get('contact', [ExampleController::class, 'contact']);
+Route::post('recieved', [ExampleController::class, 'recieved'])->name('recieved');
 
-Route::get('cars/show/{id}',[CarController::class,'show'])->name('cars.show');
-Route::get('cars/delete/{id}',[CarController::class,'destroy'])->name('cars.destroy');
-Route::get('cars/trashed',[CarController::class,'ShowDeleted'])->name('trashed.cars');
-//////////////////////////  add_class       ///////////////////////////////////////////////////
-Route::get('add_class',[ClacssController::class,'create']);
-Route::post('save',[ClacssController::class,'store'])->name('save');
+//////////////////////////  add_car route   //////////////////////////////////////////////////////
+Route::prefix('cars')->group(function () {
+    Route::get('createcar', [CarController::class, 'create']);
+    Route::post('store', [CarController::class, 'store'])->name('cars.store');
+////////////////////////       cars        //////////////////////////////////////////////////
+    Route::get('', [CarController::class, 'index'])->name('cars.index');
+    Route::get('{id}/edit', [CarController::class, 'edit'])->name('cars.edit');
+    Route::put('{id}/update', [CarController::class, 'update'])->name('cars.update');
+
+    Route::get('show/{id}', [CarController::class, 'show'])->name('cars.show');
+    Route::get('delete/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
+    Route::get('trashed', [CarController::class, 'ShowDeleted'])->name('trashed.cars');
+///////////////////////////////restore deleted record/////////////////////////////
+    Route::patch('{id}/restore', [CarController::class, 'restore'])->name('cars.restore');
+////////////////////////////////delete frm database//////////////////////////////////////
+    Route::delete('deletePermenant/{id}', [CarController::class, 'forceDelete'])->name('cars.permanentDelete');
+});
+
+
+Route::prefix('classes')->group(function () {
+    //////////////////////////  add_class       ///////////////////////////////////////////////////
+    Route::get('add_class', [ClacssController::class, 'create']);
+    Route::post('save', [ClacssController::class, 'store'])->name('save');
 /////////////////////////    classes      /////////////////////////////////////////////////
-Route::get('classes',[ClacssController::class,'index'])->name('clas');
+    Route::get('', [ClacssController::class, 'index'])->name('clas');
 ///////////////////////       Edit         //////////////////////////////////////////////
-Route::get('class/edit/{id}',[ClacssController::class,'edit'])->name('class.edit');
-Route::put('classes/{id}',[ClacssController::class,'update'])->name('classes.update');
+    Route::get('edit/{id}', [ClacssController::class, 'edit'])->name('class.edit');
+    Route::put('update/{id}', [ClacssController::class, 'update'])->name('classes.update');
 ///////////////////////       show         //////////////////////////////////////////////
-Route::get('classes/show/{id}',[ClacssController::class,'show'])->name('classes.show');
+    Route::get('show/{id}', [ClacssController::class, 'show'])->name('classes.show');
 ///////////////////////       delete         //////////////////////////////////////////////
-Route::delete('class/delete/{id}',[ClacssController::class,'destroy'])->name('class.delete');
-Route::get('classes/trashed',[ClacssController::class,'showDeletedClasses'])->name('classes.trashed');
+    Route::delete('delete/{id}', [ClacssController::class, 'destroy'])->name('class.delete');
+    Route::get('trashed', [ClacssController::class, 'showDeletedClasses'])->name('classes.trashed');
+//////////////////////////    restore          ////////////////////////////////////////////
+    Route::patch('restore/{id}', [ClacssController::class, 'restore'])->name('classes.restore');
+    Route::delete('deletePermenant/{id}', [ClacssController::class, 'forceDelete'])->name('class.permenantdelete');
+
+});
+/////////////////////////////////////////////////////////////////////////////////
+Route::get('upload',[ExampleController::class,'fileUpload']);
+Route::post('upload',[ExampleController::class,'upload'])->name('file.upload');
