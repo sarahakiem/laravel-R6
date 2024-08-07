@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClacssController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -126,22 +127,23 @@ Route::get('contact', [ExampleController::class, 'contact']);
 Route::post('recieved', [ExampleController::class, 'recieved'])->name('recieved');
 
 //////////////////////////  add_car route   //////////////////////////////////////////////////////
-Route::prefix('cars')->group(function () {
-    Route::get('createcar', [CarController::class, 'create']);
-    Route::post('store', [CarController::class, 'store'])->name('cars.store');
+Route::prefix('cars')->controller(CarController::class)->group(function () {
+    Route::get('createcar', 'create');
+    Route::post('store','store')->name('cars.store');
 ////////////////////////       cars        //////////////////////////////////////////////////
-    Route::get('', [CarController::class, 'index'])->name('cars.index');
-    Route::get('{id}/edit', [CarController::class, 'edit'])->name('cars.edit');
-    Route::put('{id}/update', [CarController::class, 'update'])->name('cars.update');
+    Route::get('','index')->name('cars.index');
+    Route::get('{id}/edit','edit')->name('cars.edit');
+    Route::put('{id}/update','update')->name('cars.update');
 
-    Route::get('show/{id}', [CarController::class, 'show'])->name('cars.show');
-    Route::get('delete/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
-    Route::get('trashed', [CarController::class, 'ShowDeleted'])->name('trashed.cars');
+    Route::get('show/{id}','show')->name('cars.show');
+    Route::get('delete/{id}','destroy')->name('cars.destroy');
+    Route::get('trashed','ShowDeleted')->name('trashed.cars');
 ///////////////////////////////restore deleted record/////////////////////////////
-    Route::patch('{id}/restore', [CarController::class, 'restore'])->name('cars.restore');
+    Route::patch('{id}/restore','restore')->name('cars.restore');
 ////////////////////////////////delete frm database//////////////////////////////////////
-    Route::delete('deletePermenant/{id}', [CarController::class, 'forceDelete'])->name('cars.permanentDelete');
+    Route::delete('deletePermenant/{id}','forceDelete')->name('cars.permanentDelete');
 });
+////////////////////////////////////////////////////////////////////////
 
 
 Route::prefix('classes')->group(function () {
@@ -166,3 +168,10 @@ Route::prefix('classes')->group(function () {
 /////////////////////////////////////////////////////////////////////////////////
 Route::get('upload',[ExampleController::class,'fileUpload']);
 Route::post('upload',[ExampleController::class,'upload'])->name('file.upload');
+///////////////////////////////////////////////////////////////
+////////////////////////////////////PRODUCT///////////////////////////////////
+Route::prefix('fashion')->controller(ProductController::class)->group(function(){
+Route::get('','index')->name('fashion.index');
+Route::get('add','create');
+Route::post('product','store')->name('store.product');
+});
