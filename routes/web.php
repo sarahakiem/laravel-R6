@@ -174,4 +174,10 @@ Route::prefix('fashion')->controller(ProductController::class)->group(function()
 Route::get('','index')->name('fashion.index');
 Route::get('add','create');
 Route::post('product','store')->name('store.product');
+Route::get('all','showAllproduct');
+Route::get('edit/{id}','edit')->name('edit.product');
+Route::put('update/{id}','update')->name('update.product');
+
 });
+//////////////////////////////////////////////////////////////////////////////////////
+Route::get('about',[ExampleController::class,'about']);

@@ -70,7 +70,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product=Product::findOrfail($id);
+        return view('edit_product',compact('product'));
     }
 
     /**
@@ -78,7 +79,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2024',
+            'title' => 'required|string|max:15',
+            'price' => 'required|numeric',
+            'short_description' => 'required|string|max:100',
+            
+        ]);
+    
+        if($request->hasfile('image')){
+        $data['image'] = $this->uploadFile($request->image, 'assets/images');
+        }
+    
+        
+        $data['published']= isset($request->published);
+    
+        
+        Product::where('id',$id)->update($data);
+    
+        
+        return 'Data uploaded successfully';
     }
 
     /**
@@ -87,5 +107,9 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function showAllproduct(){
+        $products=Product::get();
+        return view('allproducts',compact('products'));
     }
 }
