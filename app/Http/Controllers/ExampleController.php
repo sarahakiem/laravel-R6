@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class ExampleController extends Controller
 {
+    public function about(){
+     return view('about');
+    }
     function login(){
         return view('login');
     }
@@ -43,5 +46,6 @@ class ExampleController extends Controller
         $request->image->move($path, $file_name);
         return 'Uploaded';
     }
+    
     }
 
