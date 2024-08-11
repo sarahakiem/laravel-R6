@@ -76,7 +76,7 @@
             <h1>{{ $car->carTable }} Details</h1>
         </div>
         <div class="car-image">
-            <img src="{{asset('assets/images/'.$car->image) }}" alt="Car Image">
+            <img src="{{asset('assets/images/cars/'.$car->image) }}" alt="Car Image">
         </div>
         <div class="details">
             <p><span class="label">Car Name:</span> <span class="value">{{ $car->carTable }}</span></p>

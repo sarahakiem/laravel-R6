@@ -60,7 +60,7 @@
           <div class="form-group mb-3 row">
             <label for="image" class="form-label col-md-2 fw-bold text-md-end" >Image:</label>
             <div class="mb-3">
-            <img src="{{ asset('assets/images/' . $car->image) }}" alt="Car Image" style="max-width: 200px; max-height: 200px;" value="{{old('image',$car->image)}}"/>
+            <img src="{{ asset('assets/images/cars/' . $car->image) }}" alt="Car Image" style="max-width: 200px; max-height: 200px;" value="{{old('image',$car->image)}}"/>
             </div>
             <div class="col-md-10">
               <input type="file" class="form-control" id="image" name="image" />
@@ -74,6 +74,22 @@
             <div class="col-md-10">
               <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name="published" value="1" {{ old('published', $car->published ) ? 'checked' : '' }}>
             </div>
+          </div>
+          <div class="form-group mb-3 row">
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">Category:</label>
+            <div class="col-md-10">
+              <select name="cat_id" id="" class="form-control">
+                <option value="">Select Category</option>
+                @foreach($categories as $cat)
+                <option value="{{ $cat->id }}" @selected(old('cat_id', $car->cat_id) == $cat->id ? 'selected' : '')>
+                        {{ $cat->categry_name }}
+                    </option>
+                @endforeach
+              </select>
+              @error('cat_id')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
+            
           </div>
           <div class="text-md-end">
             <button class="btn mt-4 btn-secondary text-white fs-5 fw-bold border-0 py-2 px-md-5">

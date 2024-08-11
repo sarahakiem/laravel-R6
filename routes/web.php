@@ -168,6 +168,11 @@ Route::prefix('classes')->group(function () {
 /////////////////////////////////////////////////////////////////////////////////
 Route::get('upload',[ExampleController::class,'fileUpload']);
 Route::post('upload',[ExampleController::class,'upload'])->name('file.upload');
+Route::get('student',[ExampleController::class,'test']);
+Route::get('onetomany',[ExampleController::class,'secTest']);
+
+
+
 ///////////////////////////////////////////////////////////////
 ////////////////////////////////////PRODUCT///////////////////////////////////
 Route::prefix('fashion')->controller(ProductController::class)->group(function(){
@@ -181,3 +186,12 @@ Route::put('update/{id}','update')->name('update.product');
 });
 //////////////////////////////////////////////////////////////////////////////////////
 Route::get('about',[ExampleController::class,'about']);
+Route::get('/download', function (Illuminate\Http\Request $request) {
+    $file = $request->input('file');
+    $path = public_path('assets/images/' . $file);
+    if (file_exists($path)) {
+        return response()->download($path);
+    } else {
+        abort(404, 'File not found');
+    }
+});

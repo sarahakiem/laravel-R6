@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Category;
+
 use App\trait\common;
+
 
 class CarController extends Controller
 {   use common;
@@ -25,7 +28,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('add_car');
+        $categories=Category::select('id','categry_name')->get();
+        return view('add_car',compact('categories'));
     }
 
     /**
@@ -42,19 +46,20 @@ class CarController extends Controller
             'carTable' => 'required|string',
             'description'=>'required|string|max:100',
             'price'=>'required|numeric',
-            'image'=>'required|image|mimes:png,jpg,jpeg,gif|max:2024'
+            'image'=>'required|image|mimes:png,jpg,jpeg,gif|max:2024',
+            'cat_id'=>'required|integer'
         ]);
 
         $data['published']= isset($request->published);
 
-        $data['image']=$this->uploadFile($request->image,'assets/images');
+        $data['image']=$this->uploadFile($request->image,'assets/images/cars');
         
 
         Car::create($data);
         
 
-        
-        return 'Uploaded succesfuly';
+        dd($data);
+        //return 'Uploaded succesfuly';
     }
 
     /**
@@ -71,12 +76,12 @@ class CarController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
+    {    $categories=Category::select('id','categry_name')->get();
         //return"the car id is ".$id;
         ////select *from cars
         $car=Car::findOrfail($id);
         ////compact////send data to a view
-        return view('edit_car',compact('car'));
+        return view('edit_car',compact('car','categories'));
     }
 
     /**
@@ -89,7 +94,8 @@ class CarController extends Controller
             'carTable' => 'required|string',
             'description'=>'required|string|max:100',
             'price'=>'required|numeric',
-            'image'=>'nullable|image|mimes:png,jpg,jpeg,gif|max:2024'
+            'image'=>'nullable|image|mimes:png,jpg,jpeg,gif|max:2024',
+            'cat_id'=>'required|integer'
         ]);
         // $car=Car::findOrfail($id);
         // $car->carTable = $request->name;
@@ -104,15 +110,18 @@ class CarController extends Controller
         // $data['image']=$file_name;
         // }
         if($request->hasFile('image')){
-            $data['image']=$this->uploadFile($request->image,'assets/images');
+            $data['image']=$this->uploadFile($request->image,'assets/images/cars');
         }
 
         
-        car::where('id',$id)->update($data);
-        return 'Uploaded succesfuly';
-        //  return redirect()->route('cars.index');
+        Car::where('id', $id)->update($data);
+
+        
+          return redirect()->route('cars.index');
 
     }
+
+
 
     /**
      * Remove the specified resource from storage.
